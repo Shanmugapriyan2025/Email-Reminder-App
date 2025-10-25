@@ -13,10 +13,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public')); // Serve static files (HTML/CSS)
 
 // Connect to MongoDB Atlas
-mongoose.connect('mongodb://localhost:27017/email-reminder-app', {
-    // Optional Mongoose/Driver settings for compatibility
-    useNewUrlParser: true,
-    useUnifiedTopology: true 
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 })
 .then(() => console.log('MongoDB connected successfully.'))
 .catch(err => console.log('MongoDB connection error:', err));
@@ -83,4 +82,5 @@ cron.schedule('* * * * *', async () => {
 // Start server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+
 });
